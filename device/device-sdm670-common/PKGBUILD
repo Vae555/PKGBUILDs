@@ -11,8 +11,6 @@ provides=(alsa-ucm-conf)
 conflicts=(alsa-ucm-conf)
 depends=(
     linux-firmware-qcom
-    linux-firmware-qca
-    linux-firmware-ath10k
     linux-sdm670
     pd-mapper-git
     qrtr-git
