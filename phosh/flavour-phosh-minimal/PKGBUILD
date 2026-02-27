@@ -3,7 +3,7 @@ _nodeps=true
 pkgname=flavour-phosh-minimal
 pkgdesc="Kupfer flavour: The gtk-based Phosh (Phone Shell) environment (minimal edition)"
 pkgver=0.1
-pkgrel=8
+pkgrel=9
 _arches=all
 arch=(
     x86_64
@@ -11,10 +11,10 @@ arch=(
     armv7h
 )
 license=(GPL)
-#NOTE: 'phosh-osk-stevia' is a temporary replacement for 'squeekboard'
 depends=(
-    phosh
+    # order stevia before phosh to avoid pacman bug
     stevia
+    phosh
     meta-gnome-minimal-common
     gnome-calls
 )
