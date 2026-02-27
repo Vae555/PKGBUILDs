@@ -3,13 +3,14 @@ _nodeps=true
 pkgname=device-sdm845-common
 pkgdesc="Common package for Qualcomm SDM845 devices"
 pkgver=0.5
-pkgrel=8
+pkgrel=9
 _arches=specific
 arch=(aarch64)
 license=(MIT)
 provides=(alsa-ucm-conf)
 conflicts=(alsa-ucm-conf)
 depends=(
+    linux-firmware-atheros
     linux-firmware-qcom
     linux-sdm845
     pd-mapper-git

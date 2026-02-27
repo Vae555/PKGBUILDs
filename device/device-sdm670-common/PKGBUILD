@@ -3,13 +3,14 @@ _nodeps=true
 pkgname=device-sdm670-common
 pkgdesc="Common package for Qualcomm SDM670 devices"
 pkgver=0.1
-pkgrel=3
+pkgrel=4
 _arches=specific
 arch=(aarch64)
 license=(MIT)
 provides=(alsa-ucm-conf)
 conflicts=(alsa-ucm-conf)
 depends=(
+    linux-firmware-atheros
     linux-firmware-qcom
     linux-sdm670
     pd-mapper-git
