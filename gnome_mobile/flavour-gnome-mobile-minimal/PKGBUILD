@@ -4,7 +4,7 @@ _nodeps=true
 pkgname=flavour-gnome-mobile-minimal
 pkgdesc="Kupfer flavour: The gtk-based GNOME desktop environment (minimal edition)"
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 _arches=all
 arch=(
     x86_64
@@ -18,7 +18,7 @@ depends=(
     mutter-mobile
     gdm
     gnome-calls
-    purism-chatty
+    chatty
 )
 source=(
     gnome-mobile.lst
