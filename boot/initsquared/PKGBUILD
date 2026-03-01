@@ -1,16 +1,16 @@
 _mode=cross
 _nodeps=true
 pkgname=initsquared
+pkgdesc="Init shim hook to bootstrap a secondary initramfs"
 pkgver=0.1
-pkgrel=1
+pkgrel=2
 _arches=specific
 arch=(any)
 license=(GPL-3.0-or-later)
 depends=(
     mkinitcpio-kupfer-hooks
+    mkinitcpio-busybox-kupfer
 )
-
-pkgdesc="Init shim hook to bootstrap a secondary initramfs"
 
 source=(
     initsquared-hook

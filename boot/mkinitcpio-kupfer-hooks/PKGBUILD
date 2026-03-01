@@ -3,12 +3,13 @@ _nodeps=true
 pkgname=mkinitcpio-kupfer-hooks
 pkgdesc="Kupfer-specific hooks to aide in device booting"
 pkgver=0.2
-pkgrel=1
+pkgrel=2
 _arches=specific
 arch=(any)
 license=(GPL3)
 depends=(
     mkinitcpio
+    mkinitcpio-busybox-kupfer
     "base-kupfer>=0.3"
 )
 install=mkinitcpio-kupfer-hooks.install
