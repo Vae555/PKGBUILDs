@@ -5,11 +5,11 @@
 # Contributor: David Herrmann <dh.herrmann at gmail dot com>
 _mode=host
 _nodeps=true
-_pkgname=qemu-user-static
+_pkgname=qemu-user
 pkgname=qemu-user-static-bin
 pkgdesc="A generic and open source machine emulator, statically linked"
-pkgver=5.2
-pkgrel=14
+pkgver=10.0.7
+pkgrel=1
 _arches=all
 arch=(
     x86_64
@@ -31,8 +31,7 @@ conflicts=(
     qemu-user
     qemu-user-static
 )
-
-_pkgadditver="+dfsg-11+deb11u3"
+_pkgadditver="+ds-0+deb13u1+b1"
 # case "${CARCH}" in
 #    "")_pkgadditver="+dfsg-sth-else"
 # esac
@@ -43,14 +42,16 @@ source_aarch64=("https://deb.debian.org/debian/pool/main/q/qemu/${_pkgname}_${pk
 source_armv7h=("https://deb.debian.org/debian/pool/main/q/qemu/${_pkgname}_${pkgver}${_pkgadditver}_armhf.deb")
 source_armv6h=("https://deb.debian.org/debian/pool/main/q/qemu/${_pkgname}_${pkgver}${_pkgadditver}_armel.deb")
 
-sha256sums_x86_64=('0b75df79ae2ddfbc4daab0223a0fc2e79c9be7b1e35c6d030879d4bd21684bca')
-sha256sums_i686=('d70af6d518698f5c1a51c9e11bdc7804275223aed20ae8b784665e0bb3f28421')
-sha256sums_aarch64=('99ee985d0bf6105fbc5dc3732c59b2100df1a250876074c87db0f802fac72f75')
-sha256sums_armv7h=('8a1a9fddba5bf783d1cddbfcbf23139cbe195e603c45d575fe5872f3451e5f04')
-sha256sums_armv6h=('8403bb0c668d08f0de5fdd24235f1715fef21a19657a71a5a74f1e57e6e60b47')
+sha256sums_x86_64=('87ca0ee0c00dcd3fe4391869c41f4944b31a079be1fdd8a3437a2ce8e364ab31')
+sha256sums_i686=('56bd64bb17ff3fa4a14ac560a67387d023e8da3e194e99e8d225046af860c24e')
+sha256sums_aarch64=('da2d8c12abd038bb01eba7d28f84b33edd3da63d5fb9a9e628f8cb86ff1aadf3')
+sha256sums_armv7h=('d50f12a21b24b41c89764ba9c46daf51ad2e557946dd021d7108e5a0ecaa096c')
+sha256sums_armv6h=('586737718b17a5abf2cdf2ec4d322a6d07fad1ffab2f247a3991e083b652f326')
 
 package() {
     cd "${pkgdir}"
     tar -xf "${srcdir}/data.tar.xz" --exclude=./usr/share/man/man1/qemu-debootstrap.1.gz ./usr/bin ./usr/share/man
+    for i in $(find usr/bin -name 'qemu-*' -and -not -name '*-static') ; do
+        ln -srvf "$i" "$i"-static
+    done
 }
-
