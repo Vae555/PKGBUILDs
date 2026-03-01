@@ -2,7 +2,7 @@ _mode=cross
 _nodeps=true
 pkgname=base-kupfer
 pkgver=0.3
-pkgrel=1
+pkgrel=2
 _arches=specific
 arch=(aarch64)
 license=(MIT)
@@ -22,7 +22,6 @@ depends=(
     wireless-regdb
     wpa_supplicant
     xdg-user-dirs
-    mkinitcpio-kupfer
     mkinitcpio-kupfer-hooks
     parted
     kupfer-config
