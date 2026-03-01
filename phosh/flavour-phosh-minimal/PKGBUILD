@@ -12,12 +12,11 @@ arch=(
 )
 license=(GPL)
 depends=(
-    # order stevia before phosh to avoid pacman bug
-    stevia
     phosh
     meta-gnome-minimal-common
     gnome-calls
 )
+optdepends=("stevia: a newer OSK alternative to squeekboard")
 source=(
     phosh.lst
     override.conf
