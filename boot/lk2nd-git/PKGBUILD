@@ -1,6 +1,6 @@
 _mode=cross
 pkgbase=boot-lk2nd-git
-pkgver=19.0.r15.g2660019
+pkgver=22.0.r2.g30cf524
 pkgrel=1
 _arches=specific
 arch=(
@@ -15,7 +15,7 @@ makedepends=(
     dtc
     arm-none-eabi-gcc
 )
-_commit=26600197fc12852e7e561c72d5240508d3e97305
+_commit=30cf524ea7e67c4d9587502ba6882ccfb06ddba8
 source=("git+$url#commit=$_commit")
 sha256sums=(SKIP)
 
