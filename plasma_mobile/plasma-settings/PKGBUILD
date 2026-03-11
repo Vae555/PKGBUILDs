@@ -4,7 +4,7 @@ _mode=host
 _crossdirect=false
 pkgname=plasma-settings
 pkgdesc="Settings application for Plasma Mobile"
-pkgver=25.07.0.r0.ge63400d
+pkgver=26.02.0.r10.g6476e7c
 pkgrel=1
 _arches=specific
 arch=(
@@ -33,7 +33,7 @@ makedepends=(
     cmake
     extra-cmake-modules
 )
-_commit=e63400ddffa936a77132b746a6792618f788ea76
+_commit=6476e7c731ac08152a0cf4f2de2317998344d747
 source=("git+$url.git#commit=$_commit")
 sha256sums=(SKIP)
 

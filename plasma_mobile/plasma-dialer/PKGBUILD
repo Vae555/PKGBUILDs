@@ -6,7 +6,7 @@ _mode=host
 _crossdirect=false
 pkgname=plasma-dialer
 pkgdesc="Phone Dialer for Plasma Mobile"
-pkgver=6.4.2.r0.gac7e1c3
+pkgver=6.6.2.r0.g5589fe4
 pkgrel=1
 _arches=all
 arch=(
@@ -39,7 +39,7 @@ makedepends=(
     extra-cmake-modules
     kdoctools
 )
-_commit=ac7e1c3b9872afcb8da764b9ccadfe53e2c3aa2e
+_commit=5589fe474031414dee9f14691dcc5d1c86c77907
 source=(
     "git+https://invent.kde.org/plasma-mobile/plasma-dialer.git#commit=$_commit"
 )

@@ -6,7 +6,7 @@ _mode=host
 _crossdirect=false
 pkgname=plasma-phonebook
 pkgdesc="Phonebook application for Mobile Devices running Plasma"
-pkgver=24.02.0.r67.gefe6130
+pkgver=24.02.0.r114.g4d136ef
 pkgrel=1
 _arches=all
 arch=(
@@ -32,7 +32,7 @@ makedepends=(
     kdoctools
     git
 )
-_commit=efe6130ee76e91d016b794e074f63a80066fb526
+_commit=4d136efe9fc6400ad567a8f98da6db22a703b7cf
 source=(
     "git+https://invent.kde.org/plasma-mobile/plasma-phonebook.git#commit=$_commit"
 )

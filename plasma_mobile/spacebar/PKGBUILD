@@ -7,7 +7,7 @@ _mode=host
 _crossdirect=false
 pkgname=spacebar
 pkgdesc="SMS and messaging application for Mobile Devices running Plasma"
-pkgver=6.4.2.r0.gc71736b
+pkgver=6.6.2.r0.g2b0482c
 pkgrel=1
 _arches=all
 arch=(
@@ -39,7 +39,7 @@ makedepends=(
     cmake
     extra-cmake-modules
 )
-_commit=c71736be6252ba181c512c5f70f028ee9fcaed09
+_commit=2b0482c41922193b218615b6ab649f44535f28ef
 source=(
     "git+https://invent.kde.org/plasma-mobile/spacebar.git#commit=$_commit"
 )

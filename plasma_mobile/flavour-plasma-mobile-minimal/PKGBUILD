@@ -2,7 +2,7 @@
 _mode=cross
 pkgname=flavour-plasma-mobile-minimal
 pkgdesc="Kupfer flavour: The Qt-based Plasma Mobile desktop environment (minimal edition)"
-pkgver=6.4
+pkgver=6.6
 pkgrel=1
 _arches=all
 arch=(
@@ -14,7 +14,7 @@ license=(GPL3)
 depends=(
     plasma-nm
     plasma-mobile-settings
-    maliit-keyboard
+    plasma-keyboard
     plasma-settings
     hfd-service
     plasma-mobile

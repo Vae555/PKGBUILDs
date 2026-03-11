@@ -4,7 +4,7 @@ _mode=host
 _crossdirect=false
 pkgname=plasma-nano
 pkgdesc="A minimal plasma shell package intended for embedded devices."
-pkgver=6.4.2.r0.ga6fdcba
+pkgver=6.6.2.r0.g449b63c
 pkgrel=1
 _arches=specific
 arch=(
@@ -31,7 +31,7 @@ makedepends=(
     cmake
     extra-cmake-modules
 )
-_commit=a6fdcba9c2ec2982e88fae33f3b92b232b03b63b
+_commit=449b63c57fad4db87a042149d8dca2236e28f919
 source=("git+$url.git#commit=$_commit")
 sha256sums=(SKIP)
 

@@ -3,7 +3,7 @@ _mode=host
 _crossdirect=false
 pkgname=plasma-mobile
 pkgdesc="Plasma Mobile shell components."
-pkgver=6.4.2.r0.g975aac6
+pkgver=6.6.2.r0.g827ea90
 pkgrel=1
 _arches=all
 arch=(
@@ -19,12 +19,13 @@ depends=(
     bluez-qt
     powerdevil
     modemmanager-qt
-    "qqc2-breeze-style>=6.4.2"
+    qqc2-breeze-style
     kirigami-addons
-    maliit-keyboard
+    plasma-keyboard
     kpipewire
     plasma-settings
     kwin
+    qt6-sensors
 )
 optdepends=(
     "plasma-settings: Settings application for Plasma Mobile"
@@ -35,23 +36,17 @@ makedepends=(
     cmake
     extra-cmake-modules
 )
-_commit=975aac6efed75d6694abcd1b22d6dc0fe8001c0d
+_commit=827ea900231fdb58fcf3b742bb353beaf67c5bb5
 source=(
     "git+https://invent.kde.org/plasma/plasma-mobile.git#commit=$_commit"
-    plasma-mobile.service
 )
 sha256sums=(
     SKIP
-    4e09f7eeae0d4c9fc7b1a9bbd1245a74809110999eadde85faba692556dec3de
 )
 
 pkgver() {
     cd "$pkgname"
     git describe --long --abbrev=7 --tags "$_commit" | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
-}
-
-prepare() {
-    mkdir -p build
 }
 
 build() {
@@ -60,13 +55,11 @@ build() {
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_INSTALL_LIBDIR=/usr/lib \
         -DCMAKE_INSTALL_LIBEXECDIR=lib \
+        -DINSTALL_SYSTEMD_SERVICE=ON \
         -DBUILD_TESTING=OFF
     cmake --build build
 }
 
 package() {
     DESTDIR="$pkgdir" cmake --install build
-    
-    install -Dm644 "$srcdir"/plasma-mobile.service \
-        "$pkgdir"/usr/lib/systemd/system/plasma-mobile.service
 }
