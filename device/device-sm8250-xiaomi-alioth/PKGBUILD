@@ -1,0 +1,92 @@
+_mode=cross
+_nodeps=true
+pkgname=device-sm8250-xiaomi-alioth
+pkgver=0.1
+pkgrel=0
+_arches=specific
+arch=(aarch64)
+license=(MIT)
+depends=(
+    linux-firmware-atheros
+    linux-firmware-qcom
+    firmware-sm8250-xiaomi-alioth
+    linux-sm8250
+    meta-qbootctl
+    pd-mapper-git
+    qrtr-git
+    rmtfs-git
+    tqftpserv-git
+    alsa-ucm-conf
+    boot-android-common
+    bootmac
+    hexagonrpcd
+    iio-sensor-proxy
+)
+_commit="fef537b30e81c05cd226ca6b13ca3c888c361240"
+_pmos_commit="bd4c139c4dca1ab5b3228adcf270d37b62db7f85"
+source=(
+    "https://github.com/nasaarmas/pmaports-alioth/raw/${_commit}/device-xiaomi-alioth/wifi-powersave.conf"
+    "https://github.com/nasaarmas/pmaports-alioth/raw/${_commit}/device-xiaomi-alioth/81-libssc-xiaomi-alioth.rules"
+    "https://github.com/nasaarmas/pmaports-alioth/raw/${_commit}/device-xiaomi-alioth/alsa-ucm-conf/HiFi.conf"
+    "https://github.com/nasaarmas/pmaports-alioth/raw/${_commit}/device-xiaomi-alioth/alsa-ucm-conf/alioth.conf"
+    "https://github.com/nasaarmas/pmaports-alioth/raw/${_commit}/device-xiaomi-alioth/hexagonrpcd.confd"
+    "https://github.com/nasaarmas/pmaports-alioth/raw/${_commit}/device-xiaomi-alioth/modules-initfs"
+    "https://github.com/nasaarmas/pmaports-alioth/raw/${_commit}/device-xiaomi-alioth/deviceinfo"
+    "https://gitlab.postmarketos.org/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom/51-qcom.conf"
+    plasmalogin.lst
+    hexagonrpcd.lst
+    bootmac-bt.lst
+    sm8250.lst
+    rootston.ini
+    autologin.conf
+    machine-info
+    xiaomi-alioth.conf
+)
+sha256sums=(
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+)
+
+package() {
+    install -Dm644 "$srcdir/wifi-powersave.conf" "$pkgdir/etc/NetworkManager/conf.d/wifi-powersave.conf"
+    install -Dm644 "$srcdir"/81-libssc-xiaomi-alioth.rules -t "$pkgdir"/usr/lib/udev/rules.d/
+    install -Dm644 "$srcdir"/hexagonrpcd.confd "$pkgdir"/etc/conf.d/hexagonrpcd-sdsp
+    install -Dm644 "$srcdir/HiFi.conf" "$pkgdir/usr/share/alsa/ucm2/Xiaomi/alioth/HiFi.conf"
+    install -Dm644 "$srcdir/alioth.conf" "$pkgdir/usr/share/alsa/ucm2/Xiaomi/alioth/alioth.conf"
+    mkdir -p "$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250"
+    ln -s ../../Xiaomi/alioth/alioth.conf "$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250/xiaomi-alioth.conf"
+    install -Dm644 "$srcdir"/51-qcom.conf "$pkgdir"/usr/share/wireplumber/wireplumber.conf.d/51-qcom.conf
+    install -Dm644 "$srcdir"/hexagonrpcd.lst "$pkgdir"/etc/kupfer/systemd/hexagonrpcd.lst
+    install -Dm644 "$srcdir"/bootmac-bt.lst "$pkgdir"/etc/kupfer/systemd/bootmac-bt.lst
+    install -Dm644 "$srcdir"/sm8250.lst "$pkgdir"/etc/kupfer/systemd/sm8250.lst
+    install -Dm644 "$srcdir"/plasmalogin.lst "$pkgdir"/etc/kupfer/systemd/plasmalogin.lst
+    mkdir -p "$pkgdir"/etc/systemd/system
+    ln -sf /usr/lib/systemd/system/graphical.target "$pkgdir"/etc/systemd/system/default.target
+    install -Dm644 "$srcdir"/rootston.ini "$pkgdir"/etc/phosh/rootston.ini
+    install -Dm644 "$srcdir"/autologin.conf "$pkgdir"/etc/plasmalogin.conf.d/autologin.conf
+    install -Dm644 "$srcdir"/xiaomi-alioth.conf "$pkgdir"/etc/kupfer/mkinitcpio.conf.d/xiaomi-alioth.conf
+    install -Dm644 "$srcdir"/machine-info "$pkgdir"/etc/machine-info
+
+    cp "$srcdir"/deviceinfo "$srcdir"/deviceinfo_
+    sed -i 's/deviceinfo_kernel_cmdline=""/deviceinfo_kernel_cmdline="net.ifnames=0"/' "$srcdir/deviceinfo_"
+    cat >>"$srcdir"/deviceinfo_ <<EOF
+
+deviceinfo_partitions_data="/dev/sda35"
+deviceinfo_modules_initfs="$(cat "$srcdir"/modules-initfs | tr '\n' ' ')"
+EOF
+    install -Dm644 "$srcdir"/deviceinfo_ "$pkgdir"/etc/kupfer/deviceinfo
+}

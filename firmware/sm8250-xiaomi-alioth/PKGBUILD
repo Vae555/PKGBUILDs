@@ -1,0 +1,27 @@
+_mode=cross
+pkgname=firmware-sm8250-xiaomi-alioth
+pkgver=0.1
+pkgrel=0
+_arches=specific
+arch=(aarch64)
+license=(custom:Proprietary)
+options=(!strip)
+_commit=95dfcdf6b154c00af3e093db82015cda90f4299a
+source=(
+    "https://github.com/N1kroks/firmware-xiaomi-alioth/archive/${_commit}.tar.gz"
+)
+sha256sums=(
+    SKIP
+)
+builddir="firmware-xiaomi-alioth-${_commit}"
+
+build() {
+    cd "$srcdir"/"$builddir"
+    mkdir usr/lib
+    mv lib/* usr/lib
+    rmdir lib
+}
+
+package() {
+    cp -avf "$srcdir"/"$builddir"/* "$pkgdir"/
+}

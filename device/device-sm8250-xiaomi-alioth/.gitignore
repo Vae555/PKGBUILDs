@@ -1,0 +1,8 @@
+wifi-powersave.conf
+HiFi.conf
+alioth.conf
+51-qcom.conf
+81-libssc-xiaomi-alioth.rules
+hexagonrpcd.confd
+modules-initfs
+deviceinfo
