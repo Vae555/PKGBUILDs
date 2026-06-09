@@ -21,6 +21,7 @@ repos:
   linux:
     options:
       SigLevel: Never
+      Server : https://github.com/Vae555/kupfer-alioth-builds/releases/latest/download
   main:
     options:
       SigLevel: Never
