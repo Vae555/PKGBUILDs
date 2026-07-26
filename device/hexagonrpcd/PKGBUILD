@@ -3,7 +3,7 @@ _mode=host
 _crossdirect=false
 pkgname=(hexagonrpcd)
 pkgdesc="Qualcomm HexagonFS daemon"
-pkgver=0.3.2.r0.gb7eff23
+pkgver=0.4.0.r9.gdd9ac70
 pkgrel=1
 _arches=all
 arch=(
@@ -12,28 +12,34 @@ arch=(
     aarch64
 )
 license=(GPL-3.0-or-later)
-url="https://gitlab.com/sdm670-mainline/hexagonrpc"
+url="https://github.com/linux-msm/hexagonrpc"
 depends=(glibc)
 makedepends=(
     linux-headers
     meson
     git
 )
-_commit=b7eff23db1b11541d11175bd3f42bd4c85214baf  # tags/0.3.2^0
-_fastrpc_commit=1a78a5e54a75019e5d02e96f19ec0575212398b4
+_commit=dd9ac70c026e1bad93e8cffa3801255b8ceb551e
+_fastrpc_commit=2b580611a4b49364549dcee345fc18d45877e311
 source=(
-    "git+https://gitlab.com/sdm670-mainline/hexagonrpc.git#commit=$_commit"
+    "git+https://github.com/linux-msm/hexagonrpc.git#commit=$_commit"
     "https://gitlab.alpinelinux.org/alpine/aports/-/raw/${_fastrpc_commit}/community/hexagonrpcd/10-fastrpc.rules"
     hexagonrpcd-adsp-rootpd.service
     hexagonrpcd-adsp-sensorspd.service
     hexagonrpcd-sdsp.service
+    system-iio-sensor-proxy.service.d-hexagonrpcd.conf
+    system-iio-sensor-proxy.service.d-shutdown.conf
+    90-iio-sensor-proxy-proximity-sensor-enable.rules
 )
 sha256sums=(
-    58ad8305f9cc06885dd2e589ed8637b1b8428f6930c7f36001b6b4570cfabd81
+    SKIP
     41dfc4e8c4fd88f461a5a6e4a4e86849eb302f8bcb2b5ce2efa9690f5415d52d
     c89cb83fc7fecb232f530bcd60a3dd2d6846426f7c90173a1e078c6e15dc0bc0
     c69215694bedbc366fb9aebc8c6c08f27bb612753626f1083b4d30fcefd2fa04
     132aff498f306dd1951ae00aaae20b3b8df57d0c6bc92cb579de0e127cac73c4
+    5e56ebe9e07a5167c9489c54887432e095cd08408fe11cb3de06a40e034240c5
+    6fede30e6c04ebd950b7ea47d1ebd57f905561573ba94361a423bec5b5ae0416
+    7db6742728568abacc633cd992a7f3d4b54d7d0cd74532f7c9104afa05f315fd
 )
 
 pkgver() {
@@ -58,4 +64,11 @@ package() {
     install -Dm755 "$srcdir"/$pkgname-adsp-rootpd.service "$pkgdir"/usr/lib/systemd/system/$pkgname-adsp-rootpd.service
     install -Dm755 "$srcdir"/$pkgname-adsp-sensorspd.service "$pkgdir"/usr/lib/systemd/system/$pkgname-adsp-sensorspd.service
     install -Dm755 "$srcdir"/$pkgname-sdsp.service "$pkgdir"/usr/lib/systemd/system/$pkgname-sdsp.service
+    install -Dm644 "$srcdir"/system-iio-sensor-proxy.service.d-$pkgname.conf "$pkgdir"/usr/lib/systemd/system/iio-sensor-proxy.service.d/$pkgname.conf
+
+    # Reduce timeout to be killed until patch is upstream
+    install -Dm644 "$srcdir"/system-iio-sensor-proxy.service.d-shutdown.conf "$pkgdir"/usr/lib/systemd/system/iio-sensor-proxy.service.d/shutdown.conf
+
+    # Proximity was disabled upstream, so this re-enables it, also enable accel. sensor.
+    install -Dm644 "$srcdir"/90-iio-sensor-proxy-proximity-sensor-enable.rules -t "$pkgdir"/usr/lib/udev/rules.d/
 }
