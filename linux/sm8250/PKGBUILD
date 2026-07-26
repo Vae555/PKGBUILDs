@@ -2,12 +2,12 @@ _mode=cross
 _kernelname=sm8250
 pkgbase="linux-$_kernelname"
 _desc="Mainline kernel fork for SM8250"
-pkgver=6.19.6
+pkgver=7.1.0dev
 pkgrel=0
 _arches=specific
 arch=(aarch64)
 license=(GPL2)
-url=https://gitlab.postmarketos.org/soc/qualcomm-sm8250/linux/-/tree/6.19.6
+url=https://gitlab.postmarketos.org/soc/qualcomm-sm8250/linux
 makedepends=(
     xmlto
     docbook-xsl
@@ -19,12 +19,12 @@ makedepends=(
     python
 )
 options=(!strip)
+_commit=0794207ac0f3ec4c773fe86fc778e61a5c9c24b8
 _config_commit="fef537b30e81c05cd226ca6b13ca3c888c361240"
-_patch_commit="fef537b30e81c05cd226ca6b13ca3c888c361240"
 source=(
-    "linux-${pkgver}.tar.gz::https://gitlab.postmarketos.org/soc/qualcomm-sm8250/linux/-/archive/${pkgver}/linux-${pkgver}.tar.gz"
+    "linux-${_commit}.tar.gz::${url}/-/archive/${_commit}/linux-${_commit}.tar.gz"
     "sm8250.config::https://github.com/nasaarmas/pmaports-alioth/raw/${_config_commit}/linux-postmarketos-qcom-sm8250-alioth/config-postmarketos-qcom-sm8250-alioth.aarch64"
-    "https://github.com/nasaarmas/pmaports-alioth/raw/${_patch_commit}/linux-postmarketos-qcom-sm8250-alioth/0001-Added-POCO-F3-dts-panel-and-touchscreen-drivers.patch"
+    0001-Added-POCO-F3-dts-panel-and-touchscreen-drivers.patch
     60-linux.hook
     90-linux.hook
     extra_config
@@ -42,7 +42,7 @@ sha256sums=(
     SKIP
 )
 
-_srcname="linux-${pkgver}"
+_srcname="linux-${_commit}"
 
 pkgver() {
     cd ${_srcname}
@@ -51,7 +51,16 @@ pkgver() {
 
 prepare() {
     cd ${_srcname}
-    patch -p1 < "$srcdir/0001-Added-POCO-F3-dts-panel-and-touchscreen-drivers.patch"
+
+    local src
+    for src in "${source[@]}"; do
+      src="${src%%::*}"
+      src="${src##*/}"
+      src="${src%.zst}"
+      [[ $src = *.patch ]] || continue
+      echo "Applying patch $src..."
+      patch -Np1 < "../$src"
+    done
 
     cp "$srcdir"/sm8250.config .config
     cat ../extra_config >>.config
