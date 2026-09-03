@@ -2,7 +2,7 @@ _mode=cross
 _kernelname=sm8250
 pkgbase="linux-$_kernelname"
 _desc="Mainline kernel fork for SM8250"
-pkgver=7.1.0dev
+pkgver=7.2.0dev
 pkgrel=0
 _arches=specific
 arch=(aarch64)
@@ -19,7 +19,7 @@ makedepends=(
     python
 )
 options=(!strip)
-_commit=0794207ac0f3ec4c773fe86fc778e61a5c9c24b8
+_commit=71f4068cb254730bcf334cde9bdd6ca183e4fcd0
 _config_commit="fef537b30e81c05cd226ca6b13ca3c888c361240"
 source=(
     "linux-${_commit}.tar.gz::${url}/-/archive/${_commit}/linux-${_commit}.tar.gz"
